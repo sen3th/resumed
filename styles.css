@@ -7,7 +7,8 @@
 
 body{
     background: #f4f6fb;
-    padding: 24px;
+    padding: 28px;
+    min-height: 100vh;
 }
 
 .container{
@@ -16,4 +17,25 @@ body{
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.panel{
+    background: white;
+    border: 1px solid rgba(92, 64, 51, 0.12);
+    border-radius: 20px;
+    padding: 26px;
+}
+
+form{
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+input{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(82, 57, 45, 0.18);
+    font-size: 1rem;
 }
