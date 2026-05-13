@@ -10,24 +10,24 @@
     <div class="container">
         <section class="panel">
             <h1>Resumed</h1>
-            <form>
+            <form id="resumeForm">
                 <label for="name">Name</label>
-                <input id="name" type="text" placeholder="enter your name"/>
+                <input id="name" name="name" type="text" placeholder="enter your name"/>
 
                 <label for="email">Email</label>
-                <input id="email" type="text" placeholder="hi@seneth.me"/>
+                <input id="email" name="email" type="text" placeholder="hi@seneth.me"/>
 
                 <label for="phone">Phone</label>
-                <input id="phone" type="text" placeholder="135-456-6767"/>
+                <input id="phone" name="phone" type="text" placeholder="135-456-6767"/>
             </form>
         </section>
 
-        <section class="panel">
-            <div>
-                <h2>Your Name</h2>
+        <section class="panel" id="previewPanel">
+            <div id="resumePreview">
+                <h2 id="previewName">Your Name</h2>
                 <div id="previewContactinfo">
-                    <span>example@example.com</span> ,
-                    <span>124-456-6767</span>
+                    <span id="previewEmail">example@example.com</span> ,
+                    <span id="previewPhone">124-456-6767</span>
                 </div>
             </div>
         </section>
