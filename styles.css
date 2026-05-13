@@ -51,3 +51,10 @@ input{
     color: #4733A6;
     margin-bottom: 6px;
 }
+
+@media (max-width: 800px){
+    .container{
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
