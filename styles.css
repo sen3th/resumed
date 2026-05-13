@@ -13,10 +13,11 @@ body{
 
 .container{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.2fr;
     gap: 20px;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
+    align-items: start;
 }
 
 .panel{
@@ -26,10 +27,18 @@ body{
     padding: 26px;
 }
 
+label{
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: #50427f;
+    margin-bottom: 4px;
+}
+
 form{
     display: grid;
     gap: 10px;
     margin-top: 12px;
+    flex-direction: column;
 }
 
 input{
@@ -38,4 +47,7 @@ input{
     border-radius: 14px;
     border: 1px solid rgba(82, 57, 45, 0.18);
     font-size: 1rem;
+    background: #eff0f8;
+    color: #4733A6;
+    margin-bottom: 6px;
 }
