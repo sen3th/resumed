@@ -58,3 +58,19 @@ input{
         gap: 24px;
     }
 }
+
+.sectionButton{
+    margin-top:6px;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    background: #6756ca;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.sectionButton:hover{
+    background: #4b3896;
+}
