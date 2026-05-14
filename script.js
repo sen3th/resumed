@@ -71,6 +71,16 @@ function updatePreviewSections(){
     if (educations.length>0){
         '<h3>Education</h3><ul>'+educations.filter(e=>e.school||e.degree||e.year).map(e=>`<li><strong>${e.school||''}</strong> ${e.degree?("| "+e.degree):''} ${e.year?("("+e.year+")"):''}</li>`).join('')+'</ul>';
     }
+    if (experiences.length>0){
+        previewExperience.innerHTML =
+            `<h3>Experiences</h3><ul>`+experiences
+                .filter(e=>e.role||e.company|| e.description)
+                .map(e=> `<li><strong>${e.role || ''}</strong> @ ${e.company || ''}<br><span>${e.description||''}<span></li>`)
+                .join('') + 
+                '</ul>'
+    } else{
+        previewExperience.innerHTML = '';
+    }
 }
 
 addExperience.onclick = ()=>{
