@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function(){
     const previewEmail = document.getElementById('previewEmail');
     const previewPhone = document.getElementById('previewPhone');
     const previewEducation = document.getElementById('previewEducation');
-    
+    const previewExperience = document.getElementById('previewExperience');
+
     nameInput.addEventListener( 'input', ()=>{
         previewName.textContent = nameInput.value || 'Your name';
     })
@@ -72,4 +73,45 @@ function updatePreviewSections(){
     }
 }
 
+addExperience.onclick = ()=>{
+    experiences.push({
+        role: '',
+        company: '',
+        description: ''
+    })
+    renderExperience();
+    updatePreviewSections()
+}
+
 renderEducation();
+
+function renderExperience(){
+    experienceList.innerHTML = '';
+    experiences.forEach((ex, idx)=>{
+        const div = document.createElement('div');
+        div.innerHTML =`
+            <input placeholder="Role" value="${ex.role||''}">
+            <input placeholder="Company" value="${ex.company||''}">
+            <textarea placeholder="description" rows="2">${ex.description||''}</textarea>
+            <button type="button" class="selectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
+
+        `
+        const inputs = div.querySelectorAll('input, textarea');
+
+        inputs[0].addEventListener('input', e=>{
+            experiences[idx].role = e.target.value; updatePreviewSections();
+        })
+        inputs[1].addEventListener('input', e=>{
+            experiences[idx].company = e.target.value; updatePreviewSections()
+        })
+        inputs[2].addEventListener('input', e=>{
+            experiences[idx].description = e.target.value; updatePreviewSections();
+        })
+        div.querySelector('[data-type="experience-delete"]').onclick =()=>{
+            experiences.splice(idx, 1)
+            renderExperiment()
+            updatePreviewSections();
+        }
+        experienceList.appendChild(div)
+    })
+}
