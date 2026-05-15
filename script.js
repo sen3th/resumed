@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const previewPhone = document.getElementById('previewPhone');
     const previewEducation = document.getElementById('previewEducation');
     const previewExperience = document.getElementById('previewExperience');
+    const previewSkills = document.getElementById('previewSkills');
 
     nameInput.addEventListener( 'input', ()=>{
         previewName.textContent = nameInput.value || 'Your name';
@@ -78,7 +79,18 @@ function updatePreviewSections(){
                 .map(e=> `<li><strong>${e.role || ''}</strong> @ ${e.company || ''}<br><span>${e.description||''}<span></li>`)
                 .join('') + 
                 '</ul>'
-    } else{
+    } 
+    if (skills.length>0){
+        let sk = skills
+        .filter(s=>s.skill)
+        .map(s=>`
+                <span>${s.skill}</span>
+            `)
+        .join('')
+        previewSkills.innerHTML = '<h3>Skills</h3><div>'+sk+'</div>';
+        
+    }
+    else{
         previewExperience.innerHTML = '';
     }
 }
@@ -93,7 +105,16 @@ addExperience.onclick = ()=>{
     updatePreviewSections()
 }
 
+addSkill.onclick =()=>{
+    skills.push({skill:''})
+    renderSkills()
+    updatePreviewSections()
+}
+
 renderEducation();
+renderExperience();
+renderSkills();
+updatePreviewSections()
 
 function renderExperience(){
     experienceList.innerHTML = '';
@@ -119,9 +140,30 @@ function renderExperience(){
         })
         div.querySelector('[data-type="experience-delete"]').onclick =()=>{
             experiences.splice(idx, 1)
-            renderExperiment()
+            renderExperience()
             updatePreviewSections();
         }
         experienceList.appendChild(div)
+    })
+}
+
+function renderSkills(){
+    skillsList.innerHTML = '';
+    skills.forEach((sk, idx)=>{
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <input placeholder="Skill" value="${sk.skill|| ''}">
+            <button type="button" class="selectionButton" data-index="${idx}" data-type="skill-delete">Delete</button>
+        `
+        div.querySelector('input').addEventListener('input', e=>{
+            skills[idx].skill = e.target.value;
+            updatePreviewSections()
+        })
+        div.querySelector('[data-type="skill-delete"]').onclick = () =>{
+            skills.splice(idx, 1)
+            renderSkills()
+            updatePreviewSections();
+        }
+        skillsList.appendChild(div);
     })
 }
