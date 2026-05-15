@@ -71,7 +71,7 @@ addEducation.onclick = ()=>{
 function updatePreviewSections(){
     if (educations.length>0){
         previewEducation.innerHTML =
-            '<h3>Education</h3><ul>' +
+            '<h3 class="preview-heading">Education</h3><ul>' +
             educations
                 .filter(e => e.school || e.degree || e.year)
                 .map(
@@ -88,7 +88,7 @@ function updatePreviewSections(){
     }
     if (experiences.length>0){
         previewExperience.innerHTML =
-            `<h3>Experiences</h3><ul>`+experiences
+            `<h3 class="preview-heading">Experiences</h3><ul>`+experiences
                 .filter(e=>e.role||e.company|| e.description)
                 .map(e=> `<li><strong>${e.role || ''}</strong> @ ${e.company || ''}<br><span>${e.description||''}<span></li>`)
                 .join('') + 
@@ -101,7 +101,7 @@ function updatePreviewSections(){
                 <span class="skill">${s.skill}</span>
             `)
         .join('')
-        previewSkills.innerHTML = '<h3>Skills</h3><div>'+sk+'</div>';
+        previewSkills.innerHTML = '<h3 class="preview-heading">Skills</h3><div>'+sk+'</div>';
         
     }
     else{

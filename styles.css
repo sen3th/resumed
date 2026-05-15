@@ -93,3 +93,11 @@ input{
     font-weight: 500;
     font-size: 1em;
 }
+
+.preview-heading{
+    color: #584db4;
+    font-size: 1.16em;
+    margin-bottom: 7px;
+    font-weight: 700;
+    letter-spacing: -0.0.1em;
+}
