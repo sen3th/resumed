@@ -62,7 +62,7 @@ addEducation.onclick = ()=>{
     educations.push({
         school:'',
         degree:'',
-        description:''
+        year:''
     })
     renderEducation();
     updatePreviewSections();
@@ -70,7 +70,21 @@ addEducation.onclick = ()=>{
 
 function updatePreviewSections(){
     if (educations.length>0){
-        '<h3>Education</h3><ul>'+educations.filter(e=>e.school||e.degree||e.year).map(e=>`<li><strong>${e.school||''}</strong> ${e.degree?("| "+e.degree):''} ${e.year?("("+e.year+")"):''}</li>`).join('')+'</ul>';
+        previewEducation.innerHTML =
+            '<h3>Education</h3><ul>' +
+            educations
+                .filter(e => e.school || e.degree || e.year)
+                .map(
+                    e =>
+                    `<li><strong>${e.school || ''}</strong>`+
+                    (e.degree ? "|" + e.degree : '') +
+                    (e.year ? "("+e.year+")": '')+
+                    `</li>`
+                )
+                .join('') +
+            '</ul>'
+    } else{
+        previewEducation.innerHTML = '';
     }
     if (experiences.length>0){
         previewExperience.innerHTML =
@@ -91,7 +105,7 @@ function updatePreviewSections(){
         
     }
     else{
-        previewExperience.innerHTML = '';
+        previewSkills.innerHTML = '';
     }
 }
 
@@ -124,7 +138,7 @@ function renderExperience(){
             <input placeholder="Role" value="${ex.role||''}">
             <input placeholder="Company" value="${ex.company||''}">
             <textarea placeholder="description" rows="2">${ex.description||''}</textarea>
-            <button type="button" class="selectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
+            <button type="button" class="sectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
 
         `
         const inputs = div.querySelectorAll('input, textarea');
@@ -153,7 +167,7 @@ function renderSkills(){
         const div = document.createElement('div');
         div.innerHTML = `
             <input placeholder="Skill" value="${sk.skill|| ''}">
-            <button type="button" class="selectionButton" data-index="${idx}" data-type="skill-delete">Delete</button>
+            <button type="button" class="sectionButton" data-index="${idx}" data-type="skill-delete">Delete</button>
         `
         div.querySelector('input').addEventListener('input', e=>{
             skills[idx].skill = e.target.value;
