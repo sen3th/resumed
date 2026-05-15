@@ -76,7 +76,7 @@ function updatePreviewSections(){
                 .filter(e => e.school || e.degree || e.year)
                 .map(
                     e =>
-                    `<li><strong>${e.school || ''}</strong>`+
+                    `<li style="margin-bottom: 10px;"><strong>${e.school || ''}</strong>`+
                     (e.degree ? "|" + e.degree : '') +
                     (e.year ? "("+e.year+")": '')+
                     `</li>`
