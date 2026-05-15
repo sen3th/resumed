@@ -98,7 +98,7 @@ function updatePreviewSections(){
         let sk = skills
         .filter(s=>s.skill)
         .map(s=>`
-                <span>${s.skill}</span>
+                <span class="skill">${s.skill}</span>
             `)
         .join('')
         previewSkills.innerHTML = '<h3>Skills</h3><div>'+sk+'</div>';
