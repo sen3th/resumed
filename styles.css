@@ -102,7 +102,7 @@ input{
     letter-spacing: -0.01em;
 }
 
-#resumerPreview ul{
+#resumePreview ul{
     list-style: none;
     padding: 0;
     margin: 0 0 18px 0; 
@@ -112,4 +112,14 @@ input{
     margin-bottom: 12px;
     padding-bottom: 6px;
     border-bottom: 1px solid #f3f0fc;
+}
+
+#resumePreview{
+    line-height: 1.35;
+}
+
+#resumePreview ul{
+    list-style:none;
+    padding: 0;
+    margin: 0 0 18px 0;
 }
