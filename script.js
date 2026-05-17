@@ -74,13 +74,16 @@ function updatePreviewSections(){
             '<h3 class="preview-heading">Education</h3><ul>' +
             educations
                 .filter(e => e.school || e.degree || e.year)
-                .map(
-                    e =>
-                    `<li style="margin-bottom: 10px;"><strong>${e.school || ''}</strong>`+
-                    (e.degree ? "|" + e.degree : '') +
-                    (e.year ? "("+e.year+")": '')+
-                    `</li>`
-                )
+                .map(e => `
+                <li>
+                  <div style="font-weight:bold;">
+                    ${e.school || ''}${e.year ? ` <span style='color:#917bdf;font-weight:400'>(${e.year})</span>` : ''}
+                  </div>
+                  <div style="color:#4d4c63;margin-left:3px;">
+                    ${e.degree || ''}
+                  </div>
+                </li>
+            `)
                 .join('') +
             '</ul>'
     } else{
@@ -90,7 +93,16 @@ function updatePreviewSections(){
         previewExperience.innerHTML =
             `<h3 class="preview-heading">Experiences</h3><ul>`+experiences
                 .filter(e=>e.role||e.company|| e.description)
-                .map(e=> `<li><strong>${e.role || ''}</strong> @ ${e.company || ''}<br><span>${e.description||''}<span></li>`)
+                .map(e => `
+                <li>
+                  <div style="font-weight:bold;">
+                    ${e.role || ''}${(e.company ? ` <span style="font-weight:normal; color:#bba5fe;">@ ${e.company}</span>` : '')}
+                  </div>
+                  <div style="color:#444e81; margin-left: 3px;">
+                    ${e.description || ''}
+                  </div>
+                </li>
+            `)
                 .join('') + 
                 '</ul>'
     } 
