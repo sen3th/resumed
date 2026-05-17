@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function(){
     const pdfExperience = document.getElementById('pdfExperience');
     const pdfSkills = document.getElementById('pdfSkills');
 
+    pdfName.textContent = nameInput.value || 'Your name';
+    pdfEmail.textContent = emailInput.value || 'hi@seneth.me';
+    pdfPhone.textContent = phoneInput.value || '123-456-7890';
+
     exportPdfButton.addEventListener('click', ()=>{
         const opt = {
             margin: [0.4, 0.4, 0.4, 0.4],
