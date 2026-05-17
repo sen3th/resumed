@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function(){
     const exportPdfButton = document.getElementById('exportPdfButton');
     const resumePreview = document.getElementById('resumePreview');
 
+    const pdfPreview = document.getElementById('pdfPreview');
+    const pdfName = document.getElementById('pdfName');
+    const pdfEmail = document.getElementById('pdf-email');
+    const pdfPhone = document.getElementById('pdf-phone');
+    const pdfEducation = document.getElementById('pdfEducation');
+    const pdfExperience = document.getElementById('pdfExperience');
+    const pdfSkills = document.getElementById('pdfSkills');
+
     exportPdfButton.addEventListener('click', ()=>{
         const opt = {
             margin: [0.4, 0.4, 0.4, 0.4],
