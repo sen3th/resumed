@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', function(){
     const previewEducation = document.getElementById('previewEducation');
     const previewExperience = document.getElementById('previewExperience');
     const previewSkills = document.getElementById('previewSkills');
+    const exportPdfButton = document.getElementById('exportPdfButton');
+    const resumePreview = document.getElementById('resumePreview');
+
+    exportPdfButton.addEventListener('click', ()=>{
+        const opt = {
+            margin: [0.4, 0.4, 0.4, 0.4],
+            filename: 'resume.pdf',
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas: {scale: 2, useCORS: true},
+            jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+        }
+        html2pdf().set(opt).from(resumePreview).save()
+    }) 
 
     nameInput.addEventListener( 'input', ()=>{
         previewName.textContent = nameInput.value || 'Your name';
