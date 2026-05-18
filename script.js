@@ -1,3 +1,11 @@
+const pdfPreview = document.getElementById('pdfPreview');
+const pdfName = document.getElementById('pdfName');
+const pdfEmail = document.getElementById('pdf-email');
+const pdfPhone = document.getElementById('pdf-phone');
+const pdfEducation = document.getElementById('pdfEducation')
+const pdfExperience = document.getElementById('pdfExperience');
+const pdfSkills = document.getElementById('pdfSkills');
+
 document.addEventListener('DOMContentLoaded', function(){
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
