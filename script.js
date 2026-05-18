@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
             html2canvas: {scale: 2, useCORS: true},
             jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
         }
-        html2pdf().set(opt).from(resumePreview).save()
+        html2pdf().set(opt).from(pdfPreview).save()
     }) 
 
     nameInput.addEventListener( 'input', ()=>{
