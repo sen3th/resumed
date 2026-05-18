@@ -75,7 +75,7 @@ function renderEducation(){
         <input placeholder="School" value="${ed.school||''}">
         <input placeholder="Degree" value="${ed.degree||''}">
         <input placeholder="Year" value="${ed.year||''}">
-        <button type="button" class="sectionButton" data-index="${idx}" data-type="education-delete">Delete<button>
+        <button type="button" class="sectionButton" data-index="${idx}" data-type="education-delete">Delete</button>
         `;
         const inputs = div.querySelectorAll('input');
         inputs[0].addEventListener('input', e => {
