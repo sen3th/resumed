@@ -175,7 +175,9 @@ if (experiences.some(e=>e.role || e.company || e.description)){
 if (skills.some(s=>s.skill)){
     pdfSkills.innerHTML =
     `<div class="pdf-sectionTitle">Skills</div>
-    <div>${skills.filter(s=>s.skill).map(s=>s.skill)(', ')}</div>`
+    <div>${skills.filter(s=>s.skill)
+        .map(s=>s.skill)
+        .join(', ')}</div>`
 }
 
 addExperience.onclick = ()=>{
