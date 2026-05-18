@@ -79,13 +79,13 @@ function renderEducation(){
         `;
         const inputs = div.querySelectorAll('input');
         inputs[0].addEventListener('input', e => {
-            educations[idx].school = e.target.value; updatePreviewSelections();
+            educations[idx].school = e.target.value; updatePreviewSections();
         })
         inputs[1].addEventListener('input', e=>{
-            educations[idx].degree = e.target.value; updatePreviewSelections();
+            educations[idx].degree = e.target.value; updatePreviewSections();
         })
         inputs[2].addEventListener('input', e=>{
-            educations[idx].year = e.target.value; updatePreviewSelections();
+            educations[idx].year = e.target.value; updatePreviewSections();
         })
         div.querySelector('[data-type="education-delete"]').onclick = ()=>{
             educations.splice(idx, 1); renderEducation(); updatePreviewSections();
