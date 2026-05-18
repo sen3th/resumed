@@ -135,7 +135,11 @@ input{
 }
 
 .pdf{
-    display: none;
+    position: fixed;
+    left: -9999px;
+    top: 0;
+    width: 8.5in;
+    background: white;
 }
 
 #pdfPreview{

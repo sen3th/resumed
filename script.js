@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function(){
     pdfPhone.textContent = phoneInput.value || '123-456-7890';
 
     exportPdfButton.addEventListener('click', ()=>{
+        updatePreviewSections();
         const opt = {
             margin: [0.4, 0.4, 0.4, 0.4],
             filename: 'resume.pdf',
