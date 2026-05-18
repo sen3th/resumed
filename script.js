@@ -146,6 +146,38 @@ function updatePreviewSections(){
     }
 }
 
+pdfEducation.innerHTML = '';
+pdfExperience.innerHTML = '';
+pdfSkills.innerHTML = '';
+
+if (educations.some(e=> e.school || e.degree || e.year)){
+    pdfEducation.innerHTML = 
+    `<div class="pdf-sectionTitle">Education</div>
+    <ul class="pdf-list">
+        ${educations
+            .filter(e => e.school || e.degree || e.year)
+            .map(e=> `<li class="pdf-item"><strong>${e.school || ''}</strong>${e.degree ? ` - ${e.degree}`:''}${e.year ? ` (${e.year})`: ''}</li>`)
+            .join('')}
+            </ul>`
+}
+
+if (experiences.some(e=>e.role || e.company || e.description)){
+    pdfExperience.innerHTML = 
+    `<div class="pdf-sectionTitle">Experience</div>
+    <ul class="pdf-list">
+        ${experiences
+            .filter(e => e.role || e.company || e.description)
+            .map(e=> `<li class="pdf-item"><strong>${e.role || ''}</strong>${e.company ? ` - ${e.company}`: ''}${e.description ? `: ${e.description}`: ''}</li>`)
+            .join('')}
+    </ul>`
+}
+
+if (skills.some(s=>s.skill)){
+    pdfSkills.innerHTML =
+    `<div class="pdf-sectionTitle">Skills</div>
+    <div>${skills.filter(s=>s.skill).map(s=>s.skill)(', ')}</div>`
+}
+
 addExperience.onclick = ()=>{
     experiences.push({
         role: '',
