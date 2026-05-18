@@ -19,14 +19,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const exportPdfButton = document.getElementById('exportPdfButton');
     const resumePreview = document.getElementById('resumePreview');
 
-    const pdfPreview = document.getElementById('pdfPreview');
-    const pdfName = document.getElementById('pdfName');
-    const pdfEmail = document.getElementById('pdf-email');
-    const pdfPhone = document.getElementById('pdf-phone');
-    const pdfEducation = document.getElementById('pdfEducation');
-    const pdfExperience = document.getElementById('pdfExperience');
-    const pdfSkills = document.getElementById('pdfSkills');
-
     pdfName.textContent = nameInput.value || 'Your name';
     pdfEmail.textContent = emailInput.value || 'hi@seneth.me';
     pdfPhone.textContent = phoneInput.value || '123-456-7890';
