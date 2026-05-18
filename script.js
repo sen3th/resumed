@@ -36,12 +36,15 @@ document.addEventListener('DOMContentLoaded', function(){
 
     nameInput.addEventListener( 'input', ()=>{
         previewName.textContent = nameInput.value || 'Your name';
+        pdfName.textContent = nameInput.value || 'Your name';
     })
     emailInput.addEventListener('input', ()=>{
         previewEmail.textContent = emailInput.value || 'hi@seneth.me';
+        pdfEmail.textContent = emailInput.value || 'hi@seneth.me';
     })
     phoneInput.addEventListener('input',()=>{
         previewPhone.textContent = phoneInput.value || '123-456-7890';
+        pdfPhone.textContent = phoneInput.value || '123-456-7890';
     })
 })
 
@@ -144,8 +147,8 @@ function updatePreviewSections(){
     else{
         previewSkills.innerHTML = '';
     }
-}
 
+    
 pdfEducation.innerHTML = '';
 pdfExperience.innerHTML = '';
 pdfSkills.innerHTML = '';
@@ -178,6 +181,7 @@ if (skills.some(s=>s.skill)){
     <div>${skills.filter(s=>s.skill)
         .map(s=>s.skill)
         .join(', ')}</div>`
+}
 }
 
 addExperience.onclick = ()=>{
