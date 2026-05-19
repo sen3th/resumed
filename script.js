@@ -1,3 +1,40 @@
+function initApp(){
+
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const previewName = document.getElementById('previewName');
+    const previewEmail = document.getElementById('previewEmail');
+    const previewPhone = document.getElementById('previewPhone');
+
+    const pdfName = document.getElementById('pdfName');
+    const pdfEmail = document.getElementById('pdf-email');
+    const pdfPhone = document.getElementById('pdf-phone');
+
+    function syncHeader(){
+        const name = nameInput.value.trim() || 'Your name';
+        const email = emailInput.value.trim() || 'hi@seneth.me';
+        const phone = phoneInput.value.trim() || '123-456-7890';
+
+        previewName.textContent = name;
+        previewEmail.textContent = email;
+        previewPhone.textContent = phone;
+
+        pdfName.textContent = name;
+        pdfEmail.textContent = email;
+        pdfPhone.textContent = phone;
+    } 
+
+    nameInput.addEventListener('input', syncHeader);
+    emailInput.addEventListener('input', syncHeader);
+    phoneInput.addEventListener('input', syncHeader);
+
+    syncHeader();
+    
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
+
 let previewEducation, previewExperience, previewSkills;
 let pdfPreview, pdfEducation, pdfExperience, pdfSkills;
 let pdfName, pdfEmail, pdfPhone;
