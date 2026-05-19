@@ -16,6 +16,13 @@ document.addEventListener('DOMContentLoaded', function(){
     pdfEmail = document.getElementById('pdf-email');
     pdfPhone = document.getElementById('pdf-phone');
 
+    educationList = document.getElementById('education-list');
+    addEducation = document.getElementById('addEducation');
+    experienceList = document.getElementById('experience-list');
+    addExperience = document.getElementById('addExperience');
+    skillsList = document.getElementById('skills-list');
+    addSkill = document.getElementById('addSkill');
+
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const phoneInput =document.getElementById('phone');
@@ -53,14 +60,40 @@ document.addEventListener('DOMContentLoaded', function(){
         previewPhone.textContent = phoneInput.value || '123-456-7890';
         pdfPhone.textContent = phoneInput.value || '123-456-7890';
     })
+
+addEducation.onclick = ()=>{
+    educations.push({
+        school:'',
+        degree:'',
+        year:''
+    })
+    renderEducation();
+    updatePreviewSections();
+}
+
+addExperience.onclick = ()=>{
+    experiences.push({
+        role: '',
+        company: '',
+        description: ''
+    })
+    renderExperience();
+    updatePreviewSections()
+}
+
+addSkill.onclick =()=>{
+    skills.push({skill:''})
+    renderSkills()
+    updatePreviewSections()
+}
+
+    renderEducation();
+    renderExperience();
+    renderSkills();
+    updatePreviewSections()
 })
 
-const educationList = document.getElementById('education-list');
-const addEducation = document.getElementById('addEducation');
-const experienceList = document.getElementById('experience-list');
-const addExperience = document.getElementById('addExperience');
-const skillsList = document.getElementById('skills-list');
-const addSkill = document.getElementById('addSkill');
+let educationList, addEducation, experienceList, addExperience, skillsList, addSkill;
 
 let educations = [];
 let experiences = [];
@@ -93,15 +126,7 @@ function renderEducation(){
     })
 }
 
-addEducation.onclick = ()=>{
-    educations.push({
-        school:'',
-        degree:'',
-        year:''
-    })
-    renderEducation();
-    updatePreviewSections();
-}
+
 
 function updatePreviewSections(){
     if (educations.length>0){
@@ -191,26 +216,9 @@ if (skills.some(s=>s.skill)){
 }
 }
 
-addExperience.onclick = ()=>{
-    experiences.push({
-        role: '',
-        company: '',
-        description: ''
-    })
-    renderExperience();
-    updatePreviewSections()
-}
 
-addSkill.onclick =()=>{
-    skills.push({skill:''})
-    renderSkills()
-    updatePreviewSections()
-}
 
-renderEducation();
-renderExperience();
-renderSkills();
-updatePreviewSections()
+
 
 function renderExperience(){
     experienceList.innerHTML = '';
