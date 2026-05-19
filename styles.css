@@ -148,6 +148,7 @@ input{
     background: white;
     line-height: 1.35;
     font-size: 12pt;
+    padding: 24px;
 }
 
 .pdf-header{

@@ -1,21 +1,27 @@
-const pdfPreview = document.getElementById('pdfPreview');
-const pdfName = document.getElementById('pdfName');
-const pdfEmail = document.getElementById('pdf-email');
-const pdfPhone = document.getElementById('pdf-phone');
-const pdfEducation = document.getElementById('pdfEducation')
-const pdfExperience = document.getElementById('pdfExperience');
-const pdfSkills = document.getElementById('pdfSkills');
+let previewEducation, previewExperience, previewSkills;
+let pdfPreview, pdfEducation, pdfExperience, pdfSkills;
+let pdfName, pdfEmail, pdfPhone;
 
 document.addEventListener('DOMContentLoaded', function(){
+    previewEducation = document.getElementById('previewEducation');
+    previewExperience = document.getElementById('previewExperience');
+    previewSkills = document.getElementById('previewSkills');
+
+    pdfPreview = document.getElementById('pdfPreview');
+    pdfEducation = document.getElementById('pdfEducation');
+    pdfExperience = document.getElementById('pdfExperience');
+    pdfSkills = document.getElementById('pdfSkills');
+
+    pdfName = document.getElementById('pdfName');
+    pdfEmail = document.getElementById('pdf-email');
+    pdfPhone = document.getElementById('pdf-phone');
+
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const phoneInput =document.getElementById('phone');
     const previewName = document.getElementById('previewName');
     const previewEmail = document.getElementById('previewEmail');
     const previewPhone = document.getElementById('previewPhone');
-    const previewEducation = document.getElementById('previewEducation');
-    const previewExperience = document.getElementById('previewExperience');
-    const previewSkills = document.getElementById('previewSkills');
     const exportPdfButton = document.getElementById('exportPdfButton');
     const resumePreview = document.getElementById('resumePreview');
 
