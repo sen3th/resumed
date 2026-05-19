@@ -11,6 +11,14 @@ function initApp(){
     const pdfEmail = document.getElementById('pdf-email');
     const pdfPhone = document.getElementById('pdf-phone');
 
+    const previewEducation = document.getElementById('previewEducation');
+    const previewExperience = document.getElementById('previewExperience')
+    const previewSkills = document.getElementById('previewSkills');
+
+    const pdfEducation = document.getElementById('pdfEducation');
+    const pdfExperience = document.getElementById('pdfExperience');
+    const pdfSkills = document.getElementById('pdfSkills');
+
     function syncHeader(){
         const name = nameInput.value.trim() || 'Your name';
         const email = emailInput.value.trim() || 'hi@seneth.me';
@@ -69,10 +77,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const exportPdfButton = document.getElementById('exportPdfButton');
     const resumePreview = document.getElementById('resumePreview');
 
-    pdfName.textContent = nameInput.value || 'Your name';
-    pdfEmail.textContent = emailInput.value || 'hi@seneth.me';
-    pdfPhone.textContent = phoneInput.value || '123-456-7890';
-
     exportPdfButton.addEventListener('click', ()=>{
         updatePreviewSections();
         const opt = {
@@ -84,19 +88,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         html2pdf().set(opt).from(pdfPreview).save()
     }) 
-
-    nameInput.addEventListener( 'input', ()=>{
-        previewName.textContent = nameInput.value || 'Your name';
-        pdfName.textContent = nameInput.value || 'Your name';
-    })
-    emailInput.addEventListener('input', ()=>{
-        previewEmail.textContent = emailInput.value || 'hi@seneth.me';
-        pdfEmail.textContent = emailInput.value || 'hi@seneth.me';
-    })
-    phoneInput.addEventListener('input',()=>{
-        previewPhone.textContent = phoneInput.value || '123-456-7890';
-        pdfPhone.textContent = phoneInput.value || '123-456-7890';
-    })
 
 addEducation.onclick = ()=>{
     educations.push({
