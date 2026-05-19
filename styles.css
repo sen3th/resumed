@@ -151,6 +151,22 @@ input{
     padding: 24px;
 }
 
+.pdf-sectionTitle{
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 11pt;
+}
+
+.pdf-list{
+    margin: 0;
+    padding-left: 18px;
+}
+
+.pdf-item{
+    margin-bottom: 6px;
+}
+
 .pdf-header{
     border-bottom: 1px solid #111111;
     padding-bottom: 10px;
