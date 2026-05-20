@@ -21,6 +21,9 @@ function initApp(){
     const pdfExperience = document.getElementById('pdfExperience');
     const pdfSkills = document.getElementById('pdfSkills');
 
+    const exportPdfButton = document.getElementById('exportPdfButton');
+    const pdfPreview = document.getElementById('pdfPreview');
+
     educationList = document.getElementById('education-list');
     addEducation = document.getElementById('addEducation');
     experienceList = document.getElementById('experience-list');
@@ -77,7 +80,34 @@ function initApp(){
         refresh();
     })
 
-    syncHeader();
+    exportPdfButton.addEventListener('click', async () => {
+        syncHeader();
+        refresh();
+
+        const oldLeft = pdfPreview.style.left;
+        const oldTop = pdfPreview.style.top;
+        const oldOpacity = pdfPreview.style.opacity;
+
+        pfdfPreview.style.left = '0';
+        pdfPreview.style.top = '0';
+        pdfPreview.style.opacity = '0';
+
+        const options = {
+            margin: 0.5,
+            filename: 'resume.pdf',
+            image: {type: 'jpeg', quality: 0.98},
+            html2canvas:{scale: 2, backgroundColor: 'white'},
+            jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+        }
+
+        await html2pdf().set(options).from(pdfPreview).save();
+
+        pdfPreview.style.left = oldLeft;
+        pdfPreview.style.top = oldTop;
+        pdfPreview.style.opacity = oldOpacity;
+    }
+
+    ,syncHeader());
 
     renderEducation();
     renderExperience();
