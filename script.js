@@ -88,7 +88,7 @@ function initApp(){
         const oldTop = pdfPreview.style.top;
         const oldOpacity = pdfPreview.style.opacity;
 
-        pfdfPreview.style.left = '0';
+        pdfPreview.style.left = '0';
         pdfPreview.style.top = '0';
         pdfPreview.style.opacity = '0';
 
@@ -113,9 +113,6 @@ function initApp(){
     renderExperience();
     renderSkills();
     refresh();
-
-
-
 }
 
 let educationList, addEducation, experienceList, addExperience, skillsList, addSkill;
