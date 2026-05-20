@@ -105,9 +105,9 @@ function initApp(){
         pdfPreview.style.left = oldLeft;
         pdfPreview.style.top = oldTop;
         pdfPreview.style.opacity = oldOpacity;
-    }
+    })
 
-    ,syncHeader());
+    syncHeader();
 
     renderEducation();
     renderExperience();
