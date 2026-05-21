@@ -69,7 +69,7 @@ function initApp(){
     })
 
     addExperience.addEventListener('click', ()=>{
-        experiences.push({role:'', company:'', description:''});
+        experiences.push({role:'', company:'', location:'', start: '', end: '', description:''});
         renderExperience();
         refresh();
     })
@@ -203,17 +203,26 @@ function updatePreviewSections(state, els){
     if (experiences.length>0){
         previewExperience.innerHTML =
             `<h3 class="preview-heading">Experiences</h3><ul>`+experiences
-                .filter(e=>e.role||e.company|| e.description)
-                .map(e => `
-                <li>
-                  <div style="font-weight:bold;">
-                    ${e.role || ''}${(e.company ? ` <span style="font-weight:normal; color:#bba5fe;">@ ${e.company}</span>` : '')}
-                  </div>
-                  <div style="color:#444e81; margin-left: 3px;">
-                    ${e.description || ''}
-                  </div>
-                </li>
-            `)
+                .filter(e=>e.role||e.company|| e.location || e.start || e.end || e.description)
+                .map(e => {
+                    const meta = [
+                        e.location ? e.location: '',
+                        (e.start || e.end) ? `${e.start || ''}${e.end ? ` - ${e.end}` : ''}` : ''
+                    ].filter(Boolean).join(', ');
+
+                    return `
+                        <li>
+                            <div style="font-weight: bold;">
+                                ${e.role || ''}${e.company ? `@ {e.company}` : ''}
+                            </div>
+                            ${meta ? `<div style="color: #6e55b1; margin-left: 3px;">${meta}</div>`: ''}
+                            <div style="color: #444e81; margin-left: 3px;">
+                                ${e.description || ''}
+                            </div>
+                        </li>
+                    `
+                }
+            )
                 .join('') + 
                 '</ul>'
     } 
@@ -253,7 +262,17 @@ if (experiences.some(e=>e.role || e.company || e.description)){
     <ul class="pdf-list">
         ${experiences
             .filter(e => e.role || e.company || e.description)
-            .map(e=> `<li class="pdf-item"><strong>${e.role || ''}</strong>${e.company ? ` - ${e.company}`: ''}${e.description ? `: ${e.description}`: ''}</li>`)
+            .map(e =>{
+                const meta = [
+                    e.company ? e.company : '',
+                    e.location ? e.location : '',
+                    (e.start || e.end) ? `${e.start || ''}${e.end ? ` - ${e.end}`:''}`: ''
+                ].filter(Boolean).join(', ');
+                return `<li class="pdf-item">
+                    <strong>${e.role || ''}</strong>${meta ? ` -${meta}`: ''}${e.description ? `<br>${e.description}`:''}
+                    </li>
+                `;
+            })
             .join('')}
     </ul>`
 }
@@ -278,11 +297,41 @@ function renderExperience(){
         div.innerHTML =`
             <input placeholder="Role" value="${ex.role||''}">
             <input placeholder="Company" value="${ex.company||''}">
+            <input placeholder="Location" value="${ex.location||''}">
+            <div style="display:flex; grid-template-columns: 1fr 1fr; gap:10px;">
+                <input placeholder="start" value="${ex.start||''}">
+                <input placeholder="end" value="${ex.end||''}">
+            </div>
             <textarea placeholder="description" rows="2">${ex.description||''}</textarea>
             <button type="button" class="sectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
 
         `
         const inputs = div.querySelectorAll('input, textarea');
+
+        inputs[0].addEventListener('input', e=>{
+            experiences[idx].role = e.target.value; refresh();
+        })
+
+        inputs[1].addEventListener('input', e=>{
+            experiences[idx].company = e.target.value; refresh();
+        })
+
+        inputs[2].addEventListener('input', e=>{
+            experiences[idx].location = e.target.value; refresh();
+        })
+
+        inputs[3].addEventListener('input', e=>{
+            experiences[idx].start = e.target.value; refresh();
+        })
+
+        inputs[4].addEventListener('input', e=>{
+            experiences[idx].end = e.target.value; refresh();
+        })
+
+        inputs[5].addEventListener('input', e=>{
+            experiences[idx].description = e.target.value; refresh(); 
+        })
+
 
         inputs[0].addEventListener('input', e=>{
             experiences[idx].role = e.target.value; refresh();
