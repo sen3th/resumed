@@ -33,7 +33,7 @@ function initApp(){
 
     function syncHeader(){
         const name = nameInput.value.trim() || 'Your name';
-        const email = emailInput.value.trim() || 'hi@seneth.me';
+        const email = emailInput.value.trim() || 'example@example.com';
         const phone = phoneInput.value.trim() || '123-456-7890';
 
         previewName.textContent = name;
