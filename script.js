@@ -92,10 +92,14 @@ function initApp(){
             left: '0',
             top: '0',
             width: '8.5in',
+            height: '11in',
+            padding: '24px',
+            boxSizing: 'border-box',
             background: 'white',
             zIndex: '9999',
             opacity: '1',
-            visibility: 'visible'
+            visibility: 'visible',
+            overflow: 'hidden'
         })
 
         document.body.appendChild(clone);
