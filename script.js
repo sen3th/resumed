@@ -28,7 +28,7 @@ function initApp(){
     addEducation = document.getElementById('addEducation');
     experienceList = document.getElementById('experience-list');
     addExperience = document.getElementById('addExperience');
-    skillsList = document.getElementById('skills-list')
+    skillsList = document.getElementById('skills-list');
     addSkill = document.getElementById('addSkill');
 
     function syncHeader(){
@@ -84,27 +84,43 @@ function initApp(){
         syncHeader();
         refresh();
 
-        const oldLeft = pdfPreview.style.left;
-        const oldTop = pdfPreview.style.top;
-        const oldOpacity = pdfPreview.style.opacity;
+        const clone = pdfPreview.cloneNode(true);
+        clone.id = 'pdfPreview-export-clone';
 
-        pdfPreview.style.left = '0';
-        pdfPreview.style.top = '0';
-        pdfPreview.style.opacity = '0';
+        Object.assign(clone.style, {
+            position: 'fixed',
+            left: '0',
+            top: '0',
+            width: '8.5in',
+            background: 'white',
+            zIndex: '9999',
+            opacity: '1',
+            visibility: 'visible'
+        })
 
-        const options = {
-            margin: 0.5,
-            filename: 'resume.pdf',
-            image: {type: 'jpeg', quality: 0.98},
-            html2canvas:{scale: 2, backgroundColor: 'white'},
-            jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
-        }
+        document.body.appendChild(clone);
+        await new Promise(requestAnimationFrame);
 
-        await html2pdf().set(options).from(pdfPreview).save();
+        const canvas = await html2canvas(clone, {scale: 2, backgroundColor: 'white'})
+        const imageData = canvas.toDataURL("image/jpeg", 0.98)
 
-        pdfPreview.style.left = oldLeft;
-        pdfPreview.style.top = oldTop;
-        pdfPreview.style.opacity = oldOpacity;
+        const {jsPDF} = window.jspdf;
+        const pdf = new jsPDF({
+            unit: 'in',
+            format: 'letter',
+            orientation: 'portrait'
+        })
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imageProps = pdf.getImageProperties(imageData);
+        const imageWidth = pageWidth;
+        const imageHeight = (imageProps.height*imageWidth)/imageProps.width;
+
+        pdf.addImage(imageData, 'JPEG', 0, 0, imageWidth, Math.min(imageHeight, pageHeight));
+        pdf.save('resume.pdf');
+
+        clone.remove();
     })
 
     syncHeader();
