@@ -1,44 +1,141 @@
-document.addEventListener('DOMContentLoaded', function(){
+let refresh = () => {};
+
+function initApp(){
+
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
-    const phoneInput =document.getElementById('phone');
+    const phoneInput = document.getElementById('phone');
     const previewName = document.getElementById('previewName');
     const previewEmail = document.getElementById('previewEmail');
     const previewPhone = document.getElementById('previewPhone');
+
+    const pdfName = document.getElementById('pdfName');
+    const pdfEmail = document.getElementById('pdf-email');
+    const pdfPhone = document.getElementById('pdf-phone');
+
     const previewEducation = document.getElementById('previewEducation');
-    const previewExperience = document.getElementById('previewExperience');
+    const previewExperience = document.getElementById('previewExperience')
     const previewSkills = document.getElementById('previewSkills');
+
+    const pdfEducation = document.getElementById('pdfEducation');
+    const pdfExperience = document.getElementById('pdfExperience');
+    const pdfSkills = document.getElementById('pdfSkills');
+
     const exportPdfButton = document.getElementById('exportPdfButton');
-    const resumePreview = document.getElementById('resumePreview');
+    const pdfPreview = document.getElementById('pdfPreview');
 
-    exportPdfButton.addEventListener('click', ()=>{
-        const opt = {
-            margin: [0.4, 0.4, 0.4, 0.4],
-            filename: 'resume.pdf',
-            image: {type: 'jpeg', quality: 0.98},
-            html2canvas: {scale: 2, useCORS: true},
-            jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
-        }
-        html2pdf().set(opt).from(resumePreview).save()
-    }) 
+    educationList = document.getElementById('education-list');
+    addEducation = document.getElementById('addEducation');
+    experienceList = document.getElementById('experience-list');
+    addExperience = document.getElementById('addExperience');
+    skillsList = document.getElementById('skills-list');
+    addSkill = document.getElementById('addSkill');
 
-    nameInput.addEventListener( 'input', ()=>{
-        previewName.textContent = nameInput.value || 'Your name';
-    })
-    emailInput.addEventListener('input', ()=>{
-        previewEmail.textContent = emailInput.value || 'hi@seneth.me';
-    })
-    phoneInput.addEventListener('input',()=>{
-        previewPhone.textContent = phoneInput.value || '123-456-7890';
-    })
-})
+    function syncHeader(){
+        const name = nameInput.value.trim() || 'Your name';
+        const email = emailInput.value.trim() || 'hi@seneth.me';
+        const phone = phoneInput.value.trim() || '123-456-7890';
 
-const educationList = document.getElementById('education-list');
-const addEducation = document.getElementById('addEducation');
-const experienceList = document.getElementById('experience-list');
-const addExperience = document.getElementById('addExperience');
-const skillsList = document.getElementById('skills-list');
-const addSkill = document.getElementById('addSkill');
+        previewName.textContent = name;
+        previewEmail.textContent = email;
+        previewPhone.textContent = phone;
+
+        pdfName.textContent = name;
+        pdfEmail.textContent = email;
+        pdfPhone.textContent = phone;
+    } 
+
+    nameInput.addEventListener('input', syncHeader);
+    emailInput.addEventListener('input', syncHeader);
+    phoneInput.addEventListener('input', syncHeader);
+
+    refresh = () => {
+        updatePreviewSections(
+            {educations, experiences, skills},
+            {previewEducation,
+                previewExperience,
+                previewSkills,
+                pdfEducation,
+                pdfExperience,
+                pdfSkills
+            }
+        )
+    }
+
+    addEducation.addEventListener('click', ()=>{
+        educations.push({school:'', degree:'', year:''});
+        renderEducation();
+        refresh();
+    })
+
+    addExperience.addEventListener('click', ()=>{
+        experiences.push({role:'', company:'', description:''});
+        renderExperience();
+        refresh();
+    })
+
+    addSkill.addEventListener('click', ()=>{
+        skills.push({skill:''});
+        renderSkills();
+        refresh();
+    })
+
+    exportPdfButton.addEventListener('click', async () => {
+        syncHeader();
+        refresh();
+
+        const clone = pdfPreview.cloneNode(true);
+        clone.id = 'pdfPreview-export-clone';
+
+        Object.assign(clone.style, {
+            position: 'fixed',
+            left: '0',
+            top: '0',
+            width: '8.5in',
+            height: '11in',
+            padding: '24px',
+            boxSizing: 'border-box',
+            background: 'white',
+            zIndex: '9999',
+            opacity: '1',
+            visibility: 'visible',
+            overflow: 'hidden'
+        })
+
+        document.body.appendChild(clone);
+        await new Promise(requestAnimationFrame);
+
+        const canvas = await html2canvas(clone, {scale: 2, backgroundColor: 'white'})
+        const imageData = canvas.toDataURL("image/jpeg", 0.98)
+
+        const {jsPDF} = window.jspdf;
+        const pdf = new jsPDF({
+            unit: 'in',
+            format: 'letter',
+            orientation: 'portrait'
+        })
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imageProps = pdf.getImageProperties(imageData);
+        const imageWidth = pageWidth;
+        const imageHeight = (imageProps.height*imageWidth)/imageProps.width;
+
+        pdf.addImage(imageData, 'JPEG', 0, 0, imageWidth, Math.min(imageHeight, pageHeight));
+        pdf.save('resume.pdf');
+
+        clone.remove();
+    })
+
+    syncHeader();
+
+    renderEducation();
+    renderExperience();
+    renderSkills();
+    refresh();
+}
+
+let educationList, addEducation, experienceList, addExperience, skillsList, addSkill;
 
 let educations = [];
 let experiences = [];
@@ -52,36 +149,37 @@ function renderEducation(){
         <input placeholder="School" value="${ed.school||''}">
         <input placeholder="Degree" value="${ed.degree||''}">
         <input placeholder="Year" value="${ed.year||''}">
-        <button type="button" class="sectionButton" data-index="${idx}" data-type="education-delete">Delete<button>
+        <button type="button" class="sectionButton" data-index="${idx}" data-type="education-delete">Delete</button>
         `;
         const inputs = div.querySelectorAll('input');
         inputs[0].addEventListener('input', e => {
-            educations[idx].school = e.target.value; updatePreviewSelections();
+            educations[idx].school = e.target.value; refresh();
         })
         inputs[1].addEventListener('input', e=>{
-            educations[idx].degree = e.target.value; updatePreviewSelections();
+            educations[idx].degree = e.target.value; refresh();
         })
         inputs[2].addEventListener('input', e=>{
-            educations[idx].year = e.target.value; updatePreviewSelections();
+            educations[idx].year = e.target.value; refresh();
         })
         div.querySelector('[data-type="education-delete"]').onclick = ()=>{
-            educations.splice(idx, 1); renderEducation(); updatePreviewSections();
+            educations.splice(idx, 1); renderEducation(); refresh();
         }
         educationList.appendChild(div);
     })
 }
 
-addEducation.onclick = ()=>{
-    educations.push({
-        school:'',
-        degree:'',
-        year:''
-    })
-    renderEducation();
-    updatePreviewSections();
-}
 
-function updatePreviewSections(){
+
+function updatePreviewSections(state, els){
+    const {educations, experiences, skills} = state;
+    const{
+        previewEducation,
+        previewExperience,
+        previewSkills,
+        pdfEducation,
+        pdfExperience,
+        pdfSkills
+    } = els;
     if (educations.length>0){
         previewEducation.innerHTML =
             '<h3 class="preview-heading">Education</h3><ul>' +
@@ -132,28 +230,46 @@ function updatePreviewSections(){
     else{
         previewSkills.innerHTML = '';
     }
+
+    
+    pdfEducation.innerHTML = '';
+    pdfExperience.innerHTML = '';
+    pdfSkills.innerHTML = '';
+
+if (educations.some(e=> e.school || e.degree || e.year)){
+    pdfEducation.innerHTML = 
+    `<div class="pdf-sectionTitle">Education</div>
+    <ul class="pdf-list">
+        ${educations
+            .filter(e => e.school || e.degree || e.year)
+            .map(e=> `<li class="pdf-item"><strong>${e.school || ''}</strong>${e.degree ? ` - ${e.degree}`:''}${e.year ? ` (${e.year})`: ''}</li>`)
+            .join('')}
+            </ul>`
 }
 
-addExperience.onclick = ()=>{
-    experiences.push({
-        role: '',
-        company: '',
-        description: ''
-    })
-    renderExperience();
-    updatePreviewSections()
+if (experiences.some(e=>e.role || e.company || e.description)){
+    pdfExperience.innerHTML = 
+    `<div class="pdf-sectionTitle">Experience</div>
+    <ul class="pdf-list">
+        ${experiences
+            .filter(e => e.role || e.company || e.description)
+            .map(e=> `<li class="pdf-item"><strong>${e.role || ''}</strong>${e.company ? ` - ${e.company}`: ''}${e.description ? `: ${e.description}`: ''}</li>`)
+            .join('')}
+    </ul>`
 }
 
-addSkill.onclick =()=>{
-    skills.push({skill:''})
-    renderSkills()
-    updatePreviewSections()
+if (skills.some(s=>s.skill)){
+    pdfSkills.innerHTML =
+    `<div class="pdf-sectionTitle">Skills</div>
+    <div>${skills.filter(s=>s.skill)
+        .map(s=>s.skill)
+        .join(', ')}</div>`
+}
 }
 
-renderEducation();
-renderExperience();
-renderSkills();
-updatePreviewSections()
+
+
+
 
 function renderExperience(){
     experienceList.innerHTML = '';
@@ -169,18 +285,18 @@ function renderExperience(){
         const inputs = div.querySelectorAll('input, textarea');
 
         inputs[0].addEventListener('input', e=>{
-            experiences[idx].role = e.target.value; updatePreviewSections();
+            experiences[idx].role = e.target.value; refresh();
         })
         inputs[1].addEventListener('input', e=>{
-            experiences[idx].company = e.target.value; updatePreviewSections()
+            experiences[idx].company = e.target.value; refresh()
         })
         inputs[2].addEventListener('input', e=>{
-            experiences[idx].description = e.target.value; updatePreviewSections();
+            experiences[idx].description = e.target.value; refresh();
         })
         div.querySelector('[data-type="experience-delete"]').onclick =()=>{
             experiences.splice(idx, 1)
             renderExperience()
-            updatePreviewSections();
+            refresh();
         }
         experienceList.appendChild(div)
     })
@@ -196,13 +312,15 @@ function renderSkills(){
         `
         div.querySelector('input').addEventListener('input', e=>{
             skills[idx].skill = e.target.value;
-            updatePreviewSections()
+            refresh();
         })
         div.querySelector('[data-type="skill-delete"]').onclick = () =>{
             skills.splice(idx, 1)
             renderSkills()
-            updatePreviewSections();
+            refresh();
         }
         skillsList.appendChild(div);
     })
 }
+
+document.addEventListener('DOMContentLoaded', initApp);
