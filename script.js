@@ -60,6 +60,7 @@ function initApp(){
                 pdfSkills
             }
         )
+        saveState();
     }
 
     addEducation.addEventListener('click', ()=>{
@@ -127,12 +128,45 @@ function initApp(){
         clone.remove();
     });
 
+    const clearButton = document.getElementById('clearResume');
+    clearButton.addEventListener('click', ()=>{
+        educations = [];
+        experiences = [];
+        skills = [];
+        saveState();
+        renderEducation();
+        renderExperience();
+        renderSkills();
+        refresh();
+    })
+
     syncHeader();
 
+    loadState();
     renderEducation();
     renderExperience();
     renderSkills();
     refresh();
+}
+
+const STORAGEKEY = 'resumed';
+
+function saveState(){
+    const data = {educations, experiences, skills};
+    localStorage.setItem(STORAGEKEY, JSON.stringify(data));
+}
+
+function loadState(){
+    const raw = localStorage.getItem(STORAGEKEY);
+    if (!raw) return;
+    try{
+        const data = JSON.parse(raw);
+        educations = Array.isArray(data.educations) ? data.educations : [];
+        experiences = Array.isArray(data.experiences) ? data.experiences : [];
+        skills = Array.isArray(data.skills) ? data.skills : [];
+    } catch(e){
+
+    }
 }
 
 let educationList, addEducation, experienceList, addExperience, skillsList, addSkill;
