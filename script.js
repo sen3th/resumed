@@ -66,19 +66,19 @@ function initApp(){
         educations.push({school:'', degree:'', year:''});
         renderEducation();
         refresh();
-    })
+    });
 
     addExperience.addEventListener('click', ()=>{
         experiences.push({role:'', company:'', location:'', start: '', end: '', bullets: ['']});
         renderExperience();
         refresh();
-    })
+    });
 
     addSkill.addEventListener('click', ()=>{
         skills.push({skill:''});
         renderSkills();
         refresh();
-    })
+    });
 
     exportPdfButton.addEventListener('click', async () => {
         syncHeader();
@@ -100,7 +100,7 @@ function initApp(){
             opacity: '1',
             visibility: 'visible',
             overflow: 'hidden'
-        })
+        });
 
         document.body.appendChild(clone);
         await new Promise(requestAnimationFrame);
@@ -113,7 +113,7 @@ function initApp(){
             unit: 'in',
             format: 'letter',
             orientation: 'portrait'
-        })
+        });
 
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
@@ -125,7 +125,7 @@ function initApp(){
         pdf.save('resume.pdf');
 
         clone.remove();
-    })
+    });
 
     syncHeader();
 
@@ -154,18 +154,18 @@ function renderEducation(){
         const inputs = div.querySelectorAll('input');
         inputs[0].addEventListener('input', e => {
             educations[idx].school = e.target.value; refresh();
-        })
+        });
         inputs[1].addEventListener('input', e=>{
             educations[idx].degree = e.target.value; refresh();
-        })
+        });
         inputs[2].addEventListener('input', e=>{
             educations[idx].year = e.target.value; refresh();
-        })
+        });
         div.querySelector('[data-type="education-delete"]').onclick = ()=>{
             educations.splice(idx, 1); renderEducation(); refresh();
         }
         educationList.appendChild(div);
-    })
+    });
 }
 
 
@@ -261,7 +261,7 @@ if (educations.some(e=> e.school || e.degree || e.year)){
 if (experiences.some(e=>e.role || e.company || (e.bullets || []).some(Boolean))){
     pdfExperience.innerHTML = 
     `<div class="pdf-sectionTitle">Experience</div>
-    <ul class="pdf-list">
+    <div>
         ${experiences
             .filter(e => e.role || e.company || (e.bullets || []).some(Boolean))
             .map(e =>{
@@ -284,7 +284,7 @@ if (experiences.some(e=>e.role || e.company || (e.bullets || []).some(Boolean)))
                 `;
             })
             .join('')}
-    </ul>`
+    </div>`
 }
 
 if (skills.some(s=>s.skill)){
@@ -308,7 +308,7 @@ function renderExperience(){
             <input placeholder="Role" value="${ex.role||''}">
             <input placeholder="Company" value="${ex.company||''}">
             <input placeholder="Location" value="${ex.location||''}">
-            <div style="display:flex; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div style="display:flex; gap:10px;">
                 <input placeholder="start" value="${ex.start||''}">
                 <input placeholder="end" value="${ex.end||''}">
             </div>
@@ -321,23 +321,23 @@ function renderExperience(){
 
         inputs[0].addEventListener('input', e=>{
             experiences[idx].role = e.target.value; refresh();
-        })
+        });
 
         inputs[1].addEventListener('input', e=>{
             experiences[idx].company = e.target.value; refresh();
-        })
+        });
 
         inputs[2].addEventListener('input', e=>{
             experiences[idx].location = e.target.value; refresh();
-        })
+        });
 
         inputs[3].addEventListener('input', e=>{
             experiences[idx].start = e.target.value; refresh();
-        })
+        });
 
         inputs[4].addEventListener('input', e=>{
             experiences[idx].end = e.target.value; refresh();
-        })
+        });
 
         div.querySelector('[data-type="experience-delete"]').onclick =()=>{
             experiences.splice(idx, 1)
@@ -361,17 +361,17 @@ function renderExperience(){
             bulletInput.addEventListener('input', (e)=>{
                 experiences[idx].bullets[bidx] = e.target.value;
                 refresh();
-            })
+            });
             del.addEventListener('click', ()=>{
                 experiences[idx].bullets.splice(bidx, 1);
                 renderBullets();
                 refresh();
-            })
+            });
 
             bulletsContainer.appendChild(row);
 
-        } 
-    )}
+        }
+    )};
 
     addBulletButton.addEventListener('click', ()=>{
         experiences[idx].bullets.push('');
@@ -381,7 +381,7 @@ function renderExperience(){
 
     renderBullets();
         experienceList.appendChild(div)
-    })
+    });
 }
 
 function renderSkills(){
@@ -395,14 +395,14 @@ function renderSkills(){
         div.querySelector('input').addEventListener('input', e=>{
             skills[idx].skill = e.target.value;
             refresh();
-        })
+        });
         div.querySelector('[data-type="skill-delete"]').onclick = () =>{
             skills.splice(idx, 1)
             renderSkills()
             refresh();
         }
         skillsList.appendChild(div);
-    })
+    });
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
