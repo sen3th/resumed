@@ -182,3 +182,11 @@ input{
     margin-top: 4px;
     font-size: 11pt;
 }
+
+.pdf-bullets{
+    margin: 6px 0 0 18px;
+}
+
+.pdf-bullets li{
+    margin: 0 0 4px 0;
+}

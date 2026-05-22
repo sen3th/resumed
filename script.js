@@ -69,7 +69,7 @@ function initApp(){
     })
 
     addExperience.addEventListener('click', ()=>{
-        experiences.push({role:'', company:'', location:'', start: '', end: '', description:''});
+        experiences.push({role:'', company:'', location:'', start: '', end: '', bullets: ['']});
         renderExperience();
         refresh();
     })
@@ -203,21 +203,23 @@ function updatePreviewSections(state, els){
     if (experiences.length>0){
         previewExperience.innerHTML =
             `<h3 class="preview-heading">Experiences</h3><ul>`+experiences
-                .filter(e=>e.role||e.company|| e.location || e.start || e.end || e.description)
+                .filter(e=>e.role||e.company|| e.location || e.start || e.end || (e.bullets || []).some(Boolean))       
                 .map(e => {
                     const meta = [
+                        e.company ? e.company : '',
                         e.location ? e.location: '',
                         (e.start || e.end) ? `${e.start || ''}${e.end ? ` - ${e.end}` : ''}` : ''
                     ].filter(Boolean).join(', ');
 
+                    const bullets = (e.bullets || []).filter(Boolean);
                     return `
                         <li>
                             <div style="font-weight: bold;">
-                                ${e.role || ''}${e.company ? `@ {e.company}` : ''}
+                                ${e.role || ''}${e.company ? `@ ${e.company}` : ''}
                             </div>
                             ${meta ? `<div style="color: #6e55b1; margin-left: 3px;">${meta}</div>`: ''}
                             <div style="color: #444e81; margin-left: 3px;">
-                                ${e.description || ''}
+                                ${(e.bullets || []).filter(Boolean).map(b=> `<div>${b}</div>`).join('')}
                             </div>
                         </li>
                     `
@@ -256,21 +258,29 @@ if (educations.some(e=> e.school || e.degree || e.year)){
             </ul>`
 }
 
-if (experiences.some(e=>e.role || e.company || e.description)){
+if (experiences.some(e=>e.role || e.company || (e.bullets || []).some(Boolean))){
     pdfExperience.innerHTML = 
     `<div class="pdf-sectionTitle">Experience</div>
     <ul class="pdf-list">
         ${experiences
-            .filter(e => e.role || e.company || e.description)
+            .filter(e => e.role || e.company || (e.bullets || []).some(Boolean))
             .map(e =>{
                 const meta = [
                     e.company ? e.company : '',
                     e.location ? e.location : '',
                     (e.start || e.end) ? `${e.start || ''}${e.end ? ` - ${e.end}`:''}`: ''
                 ].filter(Boolean).join(', ');
-                return `<li class="pdf-item">
-                    <strong>${e.role || ''}</strong>${meta ? ` -${meta}`: ''}${e.description ? `<br>${e.description}`:''}
-                    </li>
+
+                const bullets = (e.bullets || []).filter(Boolean);
+                return `
+                    <div class="pdf-item">
+                        <div><strong>${e.role || ''}</strong>${meta ? `- ${meta}`:''}</div>
+                        ${bullets.length ? `
+                            <ul class="pdf-bullets">
+                                ${bullets.map(b=> `<li>${b}</li>`).join('')}
+                            </ul>
+                            `: ''}
+                    </div>
                 `;
             })
             .join('')}
@@ -302,11 +312,12 @@ function renderExperience(){
                 <input placeholder="start" value="${ex.start||''}">
                 <input placeholder="end" value="${ex.end||''}">
             </div>
-            <textarea placeholder="description" rows="2">${ex.description||''}</textarea>
+            <div class="bullets" data-bullets="${idx}"></div>
+            <button type="button" class="sectionButton" data-action="add-bullet">Add Point</button>
             <button type="button" class="sectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
 
         `
-        const inputs = div.querySelectorAll('input, textarea');
+        const inputs = div.querySelectorAll('input');
 
         inputs[0].addEventListener('input', e=>{
             experiences[idx].role = e.target.value; refresh();
@@ -328,25 +339,47 @@ function renderExperience(){
             experiences[idx].end = e.target.value; refresh();
         })
 
-        inputs[5].addEventListener('input', e=>{
-            experiences[idx].description = e.target.value; refresh(); 
-        })
-
-
-        inputs[0].addEventListener('input', e=>{
-            experiences[idx].role = e.target.value; refresh();
-        })
-        inputs[1].addEventListener('input', e=>{
-            experiences[idx].company = e.target.value; refresh()
-        })
-        inputs[2].addEventListener('input', e=>{
-            experiences[idx].description = e.target.value; refresh();
-        })
         div.querySelector('[data-type="experience-delete"]').onclick =()=>{
             experiences.splice(idx, 1)
             renderExperience()
             refresh();
         }
+        const bulletsContainer = div.querySelector('.bullets');
+    const addBulletButton = div.querySelector('[data-action="add-bullet"]');
+
+        function renderBullets(){
+        bulletsContainer.innerHTML = '';
+        (experiences[idx].bullets || []).forEach((bullet, bidx) =>{
+            const row = document.createElement('div');
+            row.innerHTML = `
+                <input placeholder="Bullet" value="${bullet}">
+                <button type="button" class="sectionButton">Delete</button>
+            `;
+            const bulletInput = row.querySelector('input');
+            const del = row.querySelector('button');
+
+            bulletInput.addEventListener('input', (e)=>{
+                experiences[idx].bullets[bidx] = e.target.value;
+                refresh();
+            })
+            del.addEventListener('click', ()=>{
+                experiences[idx].bullets.splice(bidx, 1);
+                renderBullets();
+                refresh();
+            })
+
+            bulletsContainer.appendChild(row);
+
+        } 
+    )}
+
+    addBulletButton.addEventListener('click', ()=>{
+        experiences[idx].bullets.push('');
+        renderBullets();
+        refresh();
+    });
+
+    renderBullets();
         experienceList.appendChild(div)
     })
 }
