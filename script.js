@@ -139,7 +139,11 @@ function initApp(){
         emailInput.value = '';
         phoneInput.value = '';
         localStorage.removeItem(STORAGEKEY);
+        renderEducation();
+        renderExperience();
+        renderSkills();
         syncHeader();
+        refresh();
     }
 
     syncHeader();
