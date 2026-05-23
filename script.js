@@ -267,7 +267,9 @@ function updatePreviewSections(state, els){
             )
                 .join('') + 
                 '</ul>'
-    } 
+    } else{
+        previewExperience.innerHTML = '';
+    }
     if (skills.length>0){
         let sk = skills
         .filter(s=>s.skill)
