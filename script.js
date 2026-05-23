@@ -178,6 +178,7 @@ function loadState(){
     if (!raw) return;
     try{
         const data = JSON.parse(raw);
+        if (!data || typeof data !== 'object') return;
         const header = data.header || {};
         document.getElementById('name').value = header.name || '';
         document.getElementById('email').value = header.email || '';
