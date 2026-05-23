@@ -33,6 +33,15 @@ function initApp(){
     skillsList = document.getElementById('skills-list');
     addSkill = document.getElementById('addSkill');
 
+    function flashSaved(){
+        saveStatus.textContent = 'Saved';
+        saveStatus.classList.add('flash');
+        clearTimeout(flashSaved.timeout);
+        flashSaved.timeout = setTimeout(()=>{
+            saveStatus.classList.remove('is-visible');
+        }, 700);
+    }
+
     function syncHeader(){
         const name = nameInput.value.trim() || 'Your name';
         const email = emailInput.value.trim() || 'example@example.com';
@@ -68,6 +77,7 @@ function initApp(){
             }
         )
         saveState();
+        flashSaved();
         saveStatus.textContent = 'Saved';
         setTimeout(() => (saveStatus.textContent = ''), 800);
     }

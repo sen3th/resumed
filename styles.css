@@ -192,7 +192,15 @@ input{
 }
 
 .saveStatus{
+    min-height: 18px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transition: opacity 120ms ease-in-out;
     font-size: 0.9rem;
     margin-top: 6px;
     color: #6c53af;
+}
+
+.saveStatus.is-visible{
+    opacity: 1;
 }
