@@ -129,16 +129,18 @@ function initApp(){
     });
 
     const clearButton = document.getElementById('clearResume');
-    clearButton.addEventListener('click', ()=>{
+    clearButton.addEventListener('click', handleClearResume);
+
+    function handleClearResume(){
         educations = [];
         experiences = [];
         skills = [];
-        saveState();
-        renderEducation();
-        renderExperience();
-        renderSkills();
-        refresh();
-    })
+        nameInput.value = '';
+        emailInput.value = '';
+        phoneInput.value = '';
+        localStorage.removeItem(STORAGEKEY);
+        syncHeader();
+    }
 
     syncHeader();
 
