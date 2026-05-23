@@ -190,3 +190,9 @@ input{
 .pdf-bullets li{
     margin: 0 0 4px 0;
 }
+
+.saveStatus{
+    font-size: 0.9rem;
+    margin-top: 6px;
+    color: #6c53af;
+}

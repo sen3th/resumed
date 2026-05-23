@@ -24,6 +24,8 @@ function initApp(){
     const exportPdfButton = document.getElementById('exportPdfButton');
     const pdfPreview = document.getElementById('pdfPreview');
 
+    const saveStatus = document.getElementById('saveStatus');
+
     educationList = document.getElementById('education-list');
     addEducation = document.getElementById('addEducation');
     experienceList = document.getElementById('experience-list');
@@ -66,6 +68,8 @@ function initApp(){
             }
         )
         saveState();
+        saveStatus.textContent = 'Saved';
+        setTimeout(() => (saveStatus.textContent = ''), 800);
     }
 
     addEducation.addEventListener('click', ()=>{
