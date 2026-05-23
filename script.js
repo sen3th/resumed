@@ -132,13 +132,13 @@ function initApp(){
     clearButton.addEventListener('click', handleClearResume);
 
     function handleClearResume(){
-        educations = [];
-        experiences = [];
-        skills = [];
         nameInput.value = '';
         emailInput.value = '';
         phoneInput.value = '';
-        localStorage.removeItem(STORAGEKEY);
+        educations = [];
+        experiences = [];
+        skills = [];
+        saveState();
         renderEducation();
         renderExperience();
         renderSkills();
