@@ -143,7 +143,6 @@ function initApp(){
         educations = [];
         experiences = [];
         skills = [];
-        saveState();
         renderEducation();
         renderExperience();
         renderSkills();
@@ -177,11 +176,11 @@ function loadState(){
     const raw = localStorage.getItem(STORAGEKEY);
     if (!raw) return;
     try{
+        const data = JSON.parse(raw);
         const header = data.header || {};
         document.getElementById('name').value = header.name || '';
         document.getElementById('email').value = header.email || '';
         document.getElementById('phone').value = header.phone || '';
-        const data = JSON.parse(raw);
         educations = Array.isArray(data.educations) ? data.educations : [];
         experiences = Array.isArray(data.experiences) ? data.experiences : [];
         skills = Array.isArray(data.skills) ? data.skills : [];
