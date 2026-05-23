@@ -148,6 +148,7 @@ function initApp(){
         renderSkills();
         syncHeader();
         refresh();
+        localStorage.removeItem(STORAGEKEY);
     }
 
     loadState();
