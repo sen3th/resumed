@@ -36,6 +36,7 @@ function initApp(){
     function flashSaved(){
         saveStatus.textContent = 'Saved';
         saveStatus.classList.add('flash');
+        saveStatus.classList.add('is-visible');
         clearTimeout(flashSaved.timeout);
         flashSaved.timeout = setTimeout(()=>{
             saveStatus.classList.remove('is-visible');
@@ -78,8 +79,6 @@ function initApp(){
         )
         saveState();
         flashSaved();
-        saveStatus.textContent = 'Saved';
-        setTimeout(() => (saveStatus.textContent = ''), 800);
     }
 
     addEducation.addEventListener('click', ()=>{
