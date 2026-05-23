@@ -45,9 +45,14 @@ function initApp(){
         pdfPhone.textContent = phone;
     } 
 
-    nameInput.addEventListener('input', syncHeader);
-    emailInput.addEventListener('input', syncHeader);
-    phoneInput.addEventListener('input', syncHeader);
+
+    function onHeaderInput(){
+        syncHeader();
+        saveState();
+    }
+    nameInput.addEventListener('input', onHeaderInput);
+    emailInput.addEventListener('input', onHeaderInput);
+    phoneInput.addEventListener('input', onHeaderInput);
 
     refresh = () => {
         updatePreviewSections(
@@ -146,9 +151,8 @@ function initApp(){
         refresh();
     }
 
-    syncHeader();
-
     loadState();
+    syncHeader();
     renderEducation();
     renderExperience();
     renderSkills();
@@ -158,7 +162,14 @@ function initApp(){
 const STORAGEKEY = 'resumed';
 
 function saveState(){
-    const data = {educations, experiences, skills};
+    const data = {
+        header:{
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value
+        },
+        educations, experiences, skills
+    };
     localStorage.setItem(STORAGEKEY, JSON.stringify(data));
 }
 
@@ -166,6 +177,10 @@ function loadState(){
     const raw = localStorage.getItem(STORAGEKEY);
     if (!raw) return;
     try{
+        const header = data.header || {};
+        document.getElementById('name').value = header.name || '';
+        document.getElementById('email').value = header.email || '';
+        document.getElementById('phone').value = header.phone || '';
         const data = JSON.parse(raw);
         educations = Array.isArray(data.educations) ? data.educations : [];
         experiences = Array.isArray(data.experiences) ? data.experiences : [];
