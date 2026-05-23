@@ -48,7 +48,7 @@ function initApp(){
 
     function onHeaderInput(){
         syncHeader();
-        saveState();
+        refresh();
     }
     nameInput.addEventListener('input', onHeaderInput);
     emailInput.addEventListener('input', onHeaderInput);
