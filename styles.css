@@ -25,6 +25,7 @@ body{
     border: 1px solid rgba(92, 64, 51, 0.12);
     border-radius: 20px;
     padding: 26px;
+    position: relative;
 }
 
 label{
@@ -192,9 +193,14 @@ input{
 }
 
 .saveStatus{
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-weight: 600;
     min-height: 18px;
     margin-bottom: 10px;
     opacity: 0;
+    transform: translateY(-2px);
     transition: opacity 120ms ease-in-out;
     font-size: 0.9rem;
     margin-top: 6px;
@@ -203,4 +209,5 @@ input{
 
 .saveStatus.is-visible{
     opacity: 1;
+    transform: translateY(0);
 }

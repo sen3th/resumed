@@ -35,7 +35,6 @@ function initApp(){
 
     function flashSaved(){
         saveStatus.textContent = 'Saved';
-        saveStatus.classList.add('flash');
         saveStatus.classList.add('is-visible');
         clearTimeout(flashSaved.timeout);
         flashSaved.timeout = setTimeout(()=>{
