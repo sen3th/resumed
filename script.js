@@ -213,6 +213,7 @@ function renderEducation(){
     educationList.innerHTML = '';
     educations.forEach((ed, idx)=>{
         const div = document.createElement('div');
+        div.classList.add('editor-card');
         div.innerHTML =`
         <input placeholder="School" value="${ed.school||''}">
         <input placeholder="Degree" value="${ed.degree||''}">
@@ -374,6 +375,7 @@ function renderExperience(){
     experienceList.innerHTML = '';
     experiences.forEach((ex, idx)=>{
         const div = document.createElement('div');
+        div.classList.add('editor-card');
         div.innerHTML =`
             <input placeholder="Role" value="${ex.role||''}">
             <input placeholder="Company" value="${ex.company||''}">
@@ -458,6 +460,7 @@ function renderSkills(){
     skillsList.innerHTML = '';
     skills.forEach((sk, idx)=>{
         const div = document.createElement('div');
+        div.classList.add('editor-card');
         div.innerHTML = `
             <input placeholder="Skill" value="${sk.skill|| ''}">
             <button type="button" class="sectionButton" data-index="${idx}" data-type="skill-delete">Delete</button>
