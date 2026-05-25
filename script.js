@@ -229,7 +229,12 @@ function renderEducation(){
         <input placeholder="School" value="${ed.school||''}">
         <input placeholder="Degree" value="${ed.degree||''}">
         <input placeholder="Year" value="${ed.year||''}">
-        <button type="button" class="sectionButton" data-index="${idx}" data-type="education-delete">Delete</button>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button type="button" class="sectionButton" data-action="education-up">Up</button>
+            <button type="button" class="sectionButton" data-action="education-down">Down</button>
+            <button type="button" class="sectionButton" data-type="education-delete">Delete</button>
+        </div>
         `;
         const inputs = div.querySelectorAll('input');
         inputs[0].addEventListener('input', e => {
@@ -244,6 +249,18 @@ function renderEducation(){
         div.querySelector('[data-type="education-delete"]').onclick = ()=>{
             educations.splice(idx, 1); renderEducation(); refresh();
         }
+        div.querySelector('[data-action="education-up"]').onclick = () =>{
+            moveItem(educations, idx, idx - 1);
+            renderEducation();
+            refresh();
+        }
+        div.querySelector('[data-action="education-down"]').onclick = () => {
+            moveItem(educations, idx, idx + 1);
+            renderEducation();
+            refresh();
+        }
+        if (idx === 0) div.querySelector('[data-action="education-up"]').disabled = true;
+        if (idx === educations.length - 1) div.querySelector('[data-action="education-down"]').disabled =true;
         educationList.appendChild(div);
     });
 }
