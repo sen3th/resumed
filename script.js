@@ -209,6 +209,17 @@ let educations = [];
 let experiences = [];
 let skills = [];
 
+function swap(arr, i, j){
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+function moveItem(arr, fromIndex, toIndex){
+    if (toIndex < 0 || toIndex >= arr.length) return;
+    swap(arr, fromIndex, toIndex);
+}
+
 function renderEducation(){
     educationList.innerHTML = '';
     educations.forEach((ed, idx)=>{
