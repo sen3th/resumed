@@ -223,3 +223,21 @@ input{
 .editor-card .sectionButton{
     margin-bottom: 0;
 }
+
+#resumePreview{
+    background: linear-gradient(#ffffff, #fbfbff);
+    border: 1px solid rgba(80, 66, 127, 0.10);
+    border-radius: 16px;
+    padding: 18px;
+}
+
+#previewPanel.panel{
+    background: transparent;
+    border: none;
+}
+
+#previewName{
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+    color: #2b2b35;
+}
