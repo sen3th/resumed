@@ -413,8 +413,11 @@ function renderExperience(){
                 <input placeholder="end" value="${ex.end||''}">
             </div>
             <div class="bullets" data-bullets="${idx}"></div>
-            <button type="button" class="sectionButton" data-action="add-bullet">Add Point</button>
-            <button type="button" class="sectionButton" data-index="${idx}" data-type="experience-delete">Delete</button>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button type="button" class="sectionButton" data-action="experience-up">Up</button>
+                <button type="button" class="sectionButton" data-action="experience-down">Down</button>
+                <button type="button" class="sectionButton" data-type="experience-delete">Delete</button>
+            </div>
 
         `
         const inputs = div.querySelectorAll('input');
@@ -444,6 +447,22 @@ function renderExperience(){
             renderExperience()
             refresh();
         }
+
+        div.querySelector('[data-action="experience-up"]').onclick = () =>{
+            moveItem(experiences, idx, idx - 1);
+            renderExperience();
+            refresh();
+        }
+
+        div.querySelector('[data-action="experience-down"]').onclick = () =>{
+            moveItem(experiences, idx, idx + 1);
+            renderExperience();
+            refresh();
+        }
+        
+        if (idx===0) div.querySelector('[data-action="experience-up"]').disabled = true;
+        if (idx===0) div.querySelector('[data-action="experience-down"]').disabled = true;
+
         const bulletsContainer = div.querySelector('.bullets');
     const addBulletButton = div.querySelector('[data-action="add-bullet"]');
 
