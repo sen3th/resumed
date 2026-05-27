@@ -462,7 +462,7 @@ function renderExperience(){
         }
         
         if (idx===0) div.querySelector('[data-action="experience-up"]').disabled = true;
-        if (idx===0) div.querySelector('[data-action="experience-down"]').disabled = true;
+        if (idx=== experiences.length - 1) div.querySelector('[data-action="experience-down"]').disabled = true;
 
         const bulletsContainer = div.querySelector('.bullets');
     const addBulletButton = div.querySelector('[data-action="add-bullet"]');
