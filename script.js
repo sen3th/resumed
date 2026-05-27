@@ -413,6 +413,7 @@ function renderExperience(){
                 <input placeholder="end" value="${ex.end||''}">
             </div>
             <div class="bullets" data-bullets="${idx}"></div>
+            <button type="button" class="sectionButton" data-action="add-bullet">Add Point</button>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button type="button" class="sectionButton" data-action="experience-up">Up</button>
                 <button type="button" class="sectionButton" data-action="experience-down">Down</button>
