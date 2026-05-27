@@ -241,3 +241,14 @@ input{
     margin-bottom: 6px;
     color: #2b2b35;
 }
+
+.footer-link{
+    color: #6756ca;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+footer{
+    margin-top: 40px;
+    text-align: center;
+}
